@@ -8,6 +8,7 @@ func NewView(files ...string) *View {
 	t, err := template.ParseFiles(files...)
 	if err != nil {
 		panic(err)
+		// return nil, err
 	}
 
 	return &View{
