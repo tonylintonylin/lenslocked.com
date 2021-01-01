@@ -19,9 +19,15 @@ func contact(w http.ResponseWriter, r *http.Request) {
 		"support@lenslocked.com</a>")
 }
 
+func faq(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(w, "<h1>FAQ goes here</h1>")
+}
+
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
+	r.HandleFunc("/faq", faq)
 	http.ListenAndServe("127.0.0.1:3000", r)
 }
