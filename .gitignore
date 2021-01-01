@@ -48,8 +48,10 @@ builds/**/images/*
 *.xxjson
 
 
-# Anything under a tmp folder
+# Anything under these folder
 **/tmp/*
+**/bin/*
+**/src/*
 
 # Don't include binary .exe
 lenslocked.com
