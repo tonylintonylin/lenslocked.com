@@ -24,8 +24,14 @@ func faq(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>FAQ goes here</h1>")
 }
 
+func notFound(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(w, "<h1>Error 404 We couldn't find the page requested</h1>")
+}
+
 func main() {
 	r := mux.NewRouter()
+	r.NotFoundHandler = http.HandlerFunc(notFound)
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
 	r.HandleFunc("/faq", faq)
