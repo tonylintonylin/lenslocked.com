@@ -39,7 +39,6 @@ type SignupForm struct {
 // CREATE
 // POST /signup
 func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
-
 	var form SignupForm
 	if err := parseForm(r, &form); err != nil {
 		panic(err)
