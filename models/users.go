@@ -39,22 +39,41 @@ type UserService struct {
 func (us *UserService) ByID(id uint) (*User, error) {
 	var user User
 
-	err := us.db.Where("id = ?", id).First(&user).Error
+	db := us.db.Where("id = ?", id)
 
-	switch err {
-	case nil:
-		return &user, nil
-	case gorm.ErrRecordNotFound:
-		return nil, ErrNotFound
-	default:
-		return nil, err
+	err := first(db, &user)
+	return &user, err
+}
+
+// ByEmail will look up the user by the email input
+// and returns that user. Similar to ByID above
+func (us *UserService) ByEmail(email string) (*User, error) {
+	var user User
+
+	db := us.db.Where("email = ?", email)
+
+	err := first(db, &user)
+	return &user, err
+}
+
+func first(db *gorm.DB, user *User) error {
+	err := db.First(user).Error
+	if err == gorm.ErrRecordNotFound {
+		return ErrNotFound
 	}
+	return err
 }
 
 // Create creates a provided user and backfill data
 // like the ID, createdat, updatedat, deletedat fields
 func (us *UserService) Create(user *User) error {
 	return us.db.Create(user).Error
+}
+
+// Update updates a provided user with all the data
+// in the provided user object.
+func (us *UserService) Update(user *User) error {
+	return us.db.Save(user).Error
 }
 
 // Close closes the UserService database connection
