@@ -61,4 +61,4 @@ images/**
 notes/**
 .vscode/**
 
-/exp
+# /exp
