@@ -1,10 +1,10 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 
-	_ "github.com/lib/pq"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 const (
@@ -15,19 +15,34 @@ const (
 	dbname   = "lenslocked_dev"
 )
 
+// gorm.Model is embeded, not inherited
+type User struct {
+	gorm.Model
+	Name  string
+	Email string `gorm:"not null;unique_index"`
+}
+
 func main() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
-	db, err := sql.Open("postgres", psqlInfo)
+	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
-
-	err = db.Ping()
-	if err != nil {
+	defer db.Close()
+	if err := db.DB().Ping(); err != nil {
 		panic(err)
 	}
 
-	fmt.Println("sucessfuly connected")
-	db.Close()
+	// user := User{
+	// 	Model: gorm.Model{
+	// 		ID:        1,
+	// 		CreatedAt: time.Now(),
+	// 	},
+	// }
+	// fmt.Println(user.CreatedAt)
+	
+	//db.DropTableIfExists(&Ubers{})
+	db.LogMode(true)
+	db.AutoMigrate(&User{})
 }
