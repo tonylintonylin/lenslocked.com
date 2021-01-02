@@ -53,10 +53,12 @@ builds/**/images/*
 **/bin/*
 **/src/*
 
-# Don't include binary .exe
+# Don't include binary
 lenslocked.com
 images/**
 
 .config
 notes/**
 .vscode/**
+
+/exp
