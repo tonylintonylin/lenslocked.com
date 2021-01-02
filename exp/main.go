@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"lenslocked.com/models"
 )
 
 const (
@@ -15,23 +15,18 @@ const (
 	dbname   = "lenslocked_dev"
 )
 
-// gorm.Model is embeded, not inherited
-type User struct {
-	gorm.Model
-	Name  string
-	Email string `gorm:"not null;unique_index"`
-	Color string
-}
-
 func main() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
-	db, err := gorm.Open("postgres", psqlInfo)
+	us, err := models.NewUserService(psqlInfo)
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
-
-	db.LogMode(true)
-	db.AutoMigrate(&User{})
+	defer us.Close()
+	// us.DestructiveReset()
+	user, err := us.ByID(2)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(user)
 }
