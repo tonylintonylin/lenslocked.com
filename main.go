@@ -48,6 +48,8 @@ func main() {
 	r.Handle("/login", usersC.LoginView).Methods("GET")
 	r.HandleFunc("/login", usersC.Login).Methods("POST")
 
+	r.HandleFunc("/cookietest", usersC.CookieTest).Methods("GET")
+
 	fmt.Println("starting the server on :3000")
 
 	http.ListenAndServe("127.0.0.1:3000", r)
