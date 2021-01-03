@@ -23,6 +23,7 @@ var (
 
 const userPwPepper = "secret-random-string"
 
+// NewUserService opens a new db connection and generates new UserService
 func NewUserService(connectionInfo string) (*UserService, error) {
 	db, err := gorm.Open("postgres", connectionInfo)
 	if err != nil {
@@ -34,6 +35,7 @@ func NewUserService(connectionInfo string) (*UserService, error) {
 	}, nil
 }
 
+// UserService for the User struct
 type UserService struct {
 	db *gorm.DB
 }
