@@ -16,6 +16,8 @@ var (
 	// to a method like Delete()
 	ErrInvalidID = errors.New("models: ID provided was invalid")
 
+	// ErrInvalidPassword is returned when an invalid password
+	// is used when attempting to authenticate a user.
 	ErrInvalidPassword = errors.New("models:incorrect password provided")
 )
 
@@ -66,7 +68,15 @@ func (us *UserService) ByEmail(email string) (*User, error) {
 }
 
 // Authenticate can be used to authenticate a user with the provided
-// email and password
+// email and password.
+// IF the email address provided is invalid, this will return
+// nil, ErrNotFound
+// If the password provided is invalid, this will return
+// nil, ErrInvalidPassword
+// If the email and password are both valid, this will return
+// user, nil
+// Otherwise if another error is encountered this will return
+// nil, error
 func (us *UserService) Authenticate(email, password string) (*User, error) {
 	foundUser, err := us.ByEmail(email)
 	if err != nil {
