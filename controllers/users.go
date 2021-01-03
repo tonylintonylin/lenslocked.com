@@ -19,6 +19,7 @@ func NewUsers(us *models.UserService) *Users {
 	}
 }
 
+// Users struct for user model
 type Users struct {
 	NewView   *views.View
 	LoginView *views.View
@@ -34,6 +35,7 @@ func (u *Users) New(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// SignupForm contain inputs for user sign up
 type SignupForm struct {
 	Name     string `schema:"name"`
 	Email    string `schema:"email"`
@@ -66,6 +68,7 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/cookietest", http.StatusFound)
 }
 
+// LoginForm contain inputs for the user login
 type LoginForm struct {
 	Email    string `schema:"email"`
 	Password string `schema:"password"`
@@ -99,6 +102,7 @@ func (u *Users) Login(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/cookietest", http.StatusFound)
 }
 
+// signIn is used to sign the given user in via cookies
 func signIn(w http.ResponseWriter, user *models.User) {
 	cookie := http.Cookie{
 		Name:  "email",

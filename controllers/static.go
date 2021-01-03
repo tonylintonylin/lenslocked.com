@@ -2,6 +2,7 @@ package controllers
 
 import "lenslocked.com/views"
 
+// NewStatic returns static views
 func NewStatic() *Static {
 	return &Static{
 		Home:    views.NewView("bootstrap", "static/home"),
@@ -9,6 +10,7 @@ func NewStatic() *Static {
 	}
 }
 
+// Static is static views
 type Static struct {
 	Home    *views.View
 	Contact *views.View
