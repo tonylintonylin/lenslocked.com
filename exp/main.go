@@ -24,8 +24,6 @@ func main() {
 	}
 	defer us.Close()
 
-	us.DestructiveReset()
-
 	user := models.User{
 		Name:  "Mike",
 		Email: "mike@example.com",
