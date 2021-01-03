@@ -8,5 +8,5 @@ import (
 
 func main() {
 	fmt.Println(rand.String(10))
-	fmt.Println(rand.RememberToken)
+	fmt.Println(rand.RememberToken())
 }
