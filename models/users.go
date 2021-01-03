@@ -81,8 +81,8 @@ func (us *UserService) Create(user *User) error {
 	}
 
 	user.PasswordHash = string(hashedBytes)
-	user.PasswordHash = ""
-	
+	user.Password = ""
+
 	return us.db.Create(user).Error
 }
 
